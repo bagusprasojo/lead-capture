@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Dashboard Leads{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-0">Hi, {{ profile.business_name }}</h2>
+        <p class="text-muted mb-0">Kelola lead kamu di sini.</p>
+    </div>
+    <div>
+        <a href="{% url 'leads:profile' %}" class="btn btn-outline-secondary me-2">Profil Bisnis</a>
+        <a href="{% url 'leads:export_csv' %}" class="btn btn-success">Export CSV</a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form class="row g-2 mb-3" method="get">
+                    <div class="col-md-6">
+                        <input class="form-control" type="search" name="q" placeholder="Cari nama atau email" value="{{ query }}">
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-select" name="status">
+                            <option value="">Semua status</option>
+                            {% for code, label in status_choices %}
+                                <option value="{{ code }}" {% if selected_status == code %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2 d-grid">
+                        <button class="btn btn-primary" type="submit">Filter</button>
+                    </div>
+                </form>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Dibuat</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for lead in leads %}
+                            <tr>
+                                <td>{{ lead.name }}</td>
+                                <td>{{ lead.email }}</td>
+                                <td><span class="badge bg-secondary">{{ lead.get_status_display }}</span></td>
+                                <td>{{ lead.created_at|date:"d M Y H:i" }}</td>
+                                <td class="text-end">
+                                    <a class="btn btn-sm btn-outline-primary" href="{% url 'leads:lead_edit' lead.pk %}">Update</a>
+                                    <a class="btn btn-sm btn-outline-danger" href="{% url 'leads:lead_delete' lead.pk %}">Hapus</a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">Belum ada data lead.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% if is_paginated %}
+                    <nav>
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}&status={{ selected_status }}">Prev</a>
+                                </li>
+                            {% endif %}
+                            <li class="page-item disabled">
+                                <span class="page-link">Halaman {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+                            </li>
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}&status={{ selected_status }}">Next</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5>Script Embed</h5>
+                <p class="small text-muted">Tempel kode di website kamu:</p>
+                <code class="embed-code">&lt;script src="{{ embed_script_url }}"&gt;&lt;/script&gt;</code>
+                <p class="small text-muted mt-3">Form akan tampil sebagai iframe sehingga aman dari CSRF.</p>
+            </div>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5>Statistik singkat</h5>
+                <p class="mb-1">Total leads: <strong>{{ total_leads }}</strong></p>
+                <p class="mb-1">Public ID: <strong>{{ profile.public_id }}</strong></p>
+                <p class="small text-muted mb-0">Gunakan ID untuk akses form publik.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

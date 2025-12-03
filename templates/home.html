@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Lead Capture{% endblock %}
+{% block content %}
+<div class="row align-items-center">
+    <div class="col-md-6">
+        <h1 class="mb-3">Contact / Lead Capture + Auto-CSV</h1>
+        <p class="lead">Embed form publik, kelola leads, dan ekspor CSV hanya dengan beberapa klik.</p>
+        <ul>
+            <li>Script embed siap pakai</li>
+            <li>Dashboard multi-tenant dengan filter status</li>
+            <li>Notifikasi email otomatis</li>
+        </ul>
+        <a href="{% url 'leads:signup' %}" class="btn btn-primary btn-lg me-2">Mulai Gratis</a>
+        <a href="{% url 'leads:login' %}" class="btn btn-outline-primary btn-lg">Masuk</a>
+    </div>
+    <div class="col-md-6 text-center">
+        <img src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/inbox.svg" class="img-fluid" alt="Leads">
+    </div>
+</div>
+{% endblock %}
