@@ -1,0 +1,80 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*$py.class
+
+# ---- Django / Project files ----
+*.log
+*.pot
+*.pyc
+*.sqlite3
+db.sqlite3
+
+# Local environment variable files
+.env
+.env.local
+.env.production
+.env.development
+
+# ---- Virtual environment ----
+venv/
+env/
+ENV/
+.venv/
+.virtualenv/
+
+# ---- Editor settings ----
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---- OS generated files ----
+Thumbs.db
+.DS_Store
+*.bak
+
+# ---- Static & media ----
+/staticfiles/
+/static/
+/media/
+/mediafiles/
+
+# ---- Compiled binary files ----
+*.so
+
+# ---- Backup / packaging ----
+*.tgz
+*.tar.gz
+*.zip
+
+# ---- Node / Frontend (if using HTMX/React Build) ----
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+dist/
+build/
+
+# ---- Python packaging ----
+*.egg-info/
+.eggs/
+*.egg
+pip-wheel-metadata/
+wheels/
+
+# ---- Tests ----
+/.pytest_cache/
+/.coverage
+coverage.xml
+htmlcov/
+
+# ---- MyPy / Ruff / Lint ----
+.mypy_cache/
+.dmypy.json
+ruff_cache/
+.pyre/
+.pytype/
+
